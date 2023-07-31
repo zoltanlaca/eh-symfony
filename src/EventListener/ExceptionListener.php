@@ -1,9 +1,9 @@
 <?php
 
-namespace Isklad\EgonErrorHandlerBundle\EventListener;
+namespace Zoltanlaca\EhSymfony\EventListener;
 
-use Isklad\EgonErrorHandlerBundle\ClientInterface;
-use Isklad\EgonErrorHandlerBundle\Handler;
+use Zoltanlaca\EhSymfony\ClientInterface;
+use Zoltanlaca\EhSymfony\Handler;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 class ExceptionListener

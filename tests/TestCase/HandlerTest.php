@@ -2,8 +2,8 @@
 
 namespace Acme\TestBundle\Tests\TestCase;
 
-use Isklad\EgonErrorHandlerBundle\Exception\ErrorApiException;
-use Isklad\EgonErrorHandlerBundle\Handler;
+use Zoltanlaca\EhSymfony\Exception\ErrorApiException;
+use Zoltanlaca\EhSymfony\Handler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\MockHttpClient;

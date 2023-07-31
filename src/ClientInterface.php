@@ -1,6 +1,6 @@
 <?php
 
-namespace Isklad\EgonErrorHandlerBundle;
+namespace Zoltanlaca\EhSymfony;
 
 interface ClientInterface
 {

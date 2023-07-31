@@ -1,6 +1,6 @@
 <?php
 
-namespace Isklad\EgonErrorHandlerBundle\Exception;
+namespace Zoltanlaca\EhSymfony\Exception;
 
 class ErrorApiException extends \Exception
 {

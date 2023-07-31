@@ -1,8 +1,8 @@
 <?php
 
-namespace Isklad\EgonErrorHandlerBundle;
+namespace Zoltanlaca\EhSymfony;
 
-use Isklad\EgonErrorHandlerBundle\Exception\ErrorApiException;
+use Zoltanlaca\EhSymfony\Exception\ErrorApiException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;

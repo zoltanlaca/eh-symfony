@@ -1,6 +1,6 @@
 {
-  "name": "isklad/egon-error-handler-bundle",
-  "description": "Handling errors through Egon",
+  "name": "zoltanlaca/eh-symfony",
+  "description": "Handling errors",
   "type": "symfony-bundle",
   "require": {
     "php": ">=8.1",
@@ -9,7 +9,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Isklad\\EgonErrorHandlerBundle\\": "src/"
+      "Zoltanlaca\\EhSymfony\\": "src/"
     }
   },
   "autoload-dev": {

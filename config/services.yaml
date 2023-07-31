@@ -1,12 +1,12 @@
 services:
-  Isklad\EgonErrorHandlerBundle\Handler:
+  Zoltanlaca\EhSymfony\Handler:
     arguments:
       - '@http_client'
-      - '%env(EGON_ERROR_HANDLER_URL)%'
-      - '%env(EGON_ERROR_HANDLER_API_AUTH)%'
+      - '%env(EH_ERROR_HANDLER_URL)%'
+      - '%env(EH_ERROR_HANDLER_API_AUTH)%'
   egon_error_handler_client:
-    class: Isklad\EgonErrorHandlerBundle\Client
-  Isklad\EgonErrorHandlerBundle\EventListener\ExceptionListener:
+    class: Zoltanlaca\EhSymfony\Client
+  Zoltanlaca\EhSymfony\EventListener\ExceptionListener:
     tags: [ kernel.event_listener ]
     arguments:
-      - '@Isklad\EgonErrorHandlerBundle\Handler'
+      - '@Zoltanlaca\EhSymfony\Handler'

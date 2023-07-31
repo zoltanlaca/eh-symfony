@@ -1,6 +1,6 @@
 <?php
 
-namespace Isklad\EgonErrorHandlerBundle;
+namespace Zoltanlaca\EhSymfony;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
