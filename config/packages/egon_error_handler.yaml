@@ -1,0 +1,8 @@
+egon_error_handler:
+  http_client:
+    scoped_clients:
+      egon_error_handler.client:
+        base_uri: '%env(EGON_ERROR_HANDLER_URL)%'
+        headers:
+          Accept: 'application/json'
+          Authorization: 'Bearer %env(EGON_ERROR_HANDLER_API_AUTH)%'

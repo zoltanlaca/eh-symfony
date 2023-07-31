@@ -1,0 +1,12 @@
+services:
+  Isklad\EgonErrorHandlerBundle\Handler:
+    arguments:
+      - '@http_client'
+      - '%env(EGON_ERROR_HANDLER_URL)%'
+      - '%env(EGON_ERROR_HANDLER_API_AUTH)%'
+  egon_error_handler_client:
+    class: Isklad\EgonErrorHandlerBundle\Client
+  Isklad\EgonErrorHandlerBundle\EventListener\ExceptionListener:
+    tags: [ kernel.event_listener ]
+    arguments:
+      - '@Isklad\EgonErrorHandlerBundle\Handler'
