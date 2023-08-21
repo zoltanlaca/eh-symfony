@@ -73,16 +73,7 @@ class Handler
             'message' => $throwable->getMessage(),
             'file' => $throwable->getFile(),
             'line' => $throwable->getLine(),
-            'data' => ['backtrace' => $this->traceWithoutArgs($throwable)],
+            'data' => ['backtrace' => $throwable->getTraceAsString()],
         ];
-    }
-
-    private function traceWithoutArgs(\Throwable $throwable): array
-    {
-        $return = [];
-        foreach ($throwable->getTrace() as $trace) {
-            $return[] = $trace['file'] . '(' . $trace['line'] . '): ' . $trace['class'] . $trace['type'] . $trace['function'] . '()';
-        }
-        return $return;
     }
 }
