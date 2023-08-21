@@ -25,6 +25,9 @@ class Handler
      */
     public function push(\Throwable $throwable): void
     {
+        if ($this->errorApiUrl === '') {
+            return;
+        }
         $content = $this->content($throwable);
         try {
             $response = $this->report($content);
@@ -32,14 +35,14 @@ class Handler
                 throw new ErrorApiException('Egon Error Api call failed, statusCode: ' . $response->getStatusCode() . ', response: ' . $response->getContent(false));
             }
             $return = json_decode($response->getContent(true), true);
-            if(!is_array($return)) {
+            if (!is_array($return)) {
                 throw new ErrorApiException('Egon Error Api call failed, response: ' . $response->getContent(false));
             }
         } catch (TransportExceptionInterface|ServerExceptionInterface $exception) {
             throw new ErrorApiException('Egon Error Api call failed, ' . $exception->getMessage(), 0, $exception);
         }
         if (!isset($return['success']) || $return['success'] !== true) {
-            throw new ErrorApiException('Egon Error Api call failed, success!=true, '.json_encode($return));
+            throw new ErrorApiException('Egon Error Api call failed, success!=true, ' . json_encode($return));
         }
     }
 
@@ -63,12 +66,23 @@ class Handler
         );
     }
 
+
     private function content(\Throwable $throwable): array
     {
         return [
             'message' => $throwable->getMessage(),
             'file' => $throwable->getFile(),
             'line' => $throwable->getLine(),
+            'data' => ['backtrace' => $this->traceWithoutArgs($throwable)],
         ];
+    }
+
+    private function traceWithoutArgs(\Throwable $throwable): array
+    {
+        $return = [];
+        foreach ($throwable->getTrace() as $trace) {
+            $return[] = $trace['file'] . '(' . $trace['line'] . '): ' . $trace['class'] . $trace['type'] . $trace['function'] . '()';
+        }
+        return $return;
     }
 }
