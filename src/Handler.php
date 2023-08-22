@@ -30,19 +30,9 @@ class Handler
         }
         $content = $this->content($throwable);
         try {
-            $response = $this->report($content);
-            if ($response->getStatusCode() !== Response::HTTP_OK) {
-                throw new ErrorApiException('Egon Error Api call failed, statusCode: ' . $response->getStatusCode() . ', response: ' . $response->getContent(false));
-            }
-            $return = json_decode($response->getContent(true), true);
-            if (!is_array($return)) {
-                throw new ErrorApiException('Egon Error Api call failed, response: ' . $response->getContent(false));
-            }
-        } catch (TransportExceptionInterface|ServerExceptionInterface $exception) {
-            throw new ErrorApiException('Egon Error Api call failed, ' . $exception->getMessage(), 0, $exception);
-        }
-        if (!isset($return['success']) || $return['success'] !== true) {
-            throw new ErrorApiException('Egon Error Api call failed, success!=true, ' . json_encode($return));
+            $this->dirtyPush($content);
+        } catch (\Throwable $throwable) {
+            //todo log
         }
     }
 
@@ -75,5 +65,24 @@ class Handler
             'line' => $throwable->getLine(),
             'data' => ['backtrace' => $throwable->getTraceAsString()],
         ];
+    }
+
+    private function dirtyPush(array $content): void
+    {
+        try {
+            $response = $this->report($content);
+            if ($response->getStatusCode() !== Response::HTTP_OK) {
+                throw new ErrorApiException('Egon Error Api call failed, statusCode: ' . $response->getStatusCode() . ', response: ' . $response->getContent(false));
+            }
+            $return = json_decode($response->getContent(true), true);
+            if (!is_array($return)) {
+                throw new ErrorApiException('Egon Error Api call failed, response: ' . $response->getContent(false));
+            }
+        } catch (TransportExceptionInterface|ServerExceptionInterface $exception) {
+            throw new ErrorApiException('Egon Error Api call failed, ' . $exception->getMessage(), 0, $exception);
+        }
+        if (!isset($return['success']) || $return['success'] !== true) {
+            throw new ErrorApiException('Egon Error Api call failed, success!=true, ' . json_encode($return));
+        }
     }
 }
