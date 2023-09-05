@@ -4,9 +4,3 @@ services:
       - '@http_client'
       - '%env(EH_ERROR_HANDLER_URL)%'
       - '%env(EH_ERROR_HANDLER_API_AUTH)%'
-  egon_error_handler_client:
-    class: Zoltanlaca\EhSymfony\Client
-  Zoltanlaca\EhSymfony\EventListener\ExceptionListener:
-    tags: [ kernel.event_listener ]
-    arguments:
-      - '@Zoltanlaca\EhSymfony\Handler'
