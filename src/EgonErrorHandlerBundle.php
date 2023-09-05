@@ -2,6 +2,7 @@
 
 namespace Zoltanlaca\EhSymfony;
 
+use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -10,9 +11,20 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 class EgonErrorHandlerBundle extends AbstractBundle
 {
-    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $containerBuilder): void
+    public function configure(DefinitionConfigurator $definition): void
     {
-        $container->import('../config/services.yaml');
-        //$containerConfigurator->import('../config/packages/egon_error_handler.yaml');
+        $definition->rootNode()
+            ->fixXmlConfig('excluded_exception')
+            ->children()
+            ->arrayNode('excluded_exceptions')
+            ->scalarPrototype()->end()
+            ->end()
+            ->end();
+    }
+
+    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+    {
+        $container->parameters()
+            ->set('egon_error_handler.excluded_exceptions', $config['excluded_exceptions']);
     }
 }
