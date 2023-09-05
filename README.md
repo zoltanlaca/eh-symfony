@@ -7,8 +7,9 @@
 - `EH_ERROR_HANDLER_URL` - URL to the error handler. Eg: `https://localhost/error/handler`
 - `EH_ERROR_HANDLER_API_AUTH` - Key to access the error handler API. Eg: `1234567890`
 
+### Symfony
 
-### Add ExceptionListener
+#### Add ExceptionListener
 
 Into `config/services.yaml` add the following:
 
@@ -18,7 +19,7 @@ services:
     tags: [ kernel.event_listener ]
 ```
 
-### Skip exceptions
+#### Skip exceptions
 
 - copy `Zoltanlaca\EhSymfony\EventListener\ExceptionListener`
 - fill `skipExceptions` array with your exceptions
