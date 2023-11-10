@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Handler
 {
-    public function __construct(private readonly HttpClientInterface $client, private string $errorApiUrl, private string $errorApiKey)
+    public function __construct(private readonly HttpClientInterface $client, private readonly string $errorApiUrl, private readonly string $errorApiKey)
     {
     }
 
@@ -23,12 +23,12 @@ class Handler
      * @throws ClientExceptionInterface
      * @throws ErrorApiException
      */
-    public function push(\Throwable $throwable): void
+    public function push(\Throwable $throwable, array $additionalData = []): void
     {
         if ($this->errorApiUrl === '') {
             return;
         }
-        $content = $this->content($throwable);
+        $content = $this->content($throwable, $additionalData);
         try {
             $this->dirtyPush($content);
         } catch (\Throwable $throwable) {
@@ -57,13 +57,13 @@ class Handler
     }
 
 
-    private function content(\Throwable $throwable): array
+    private function content(\Throwable $throwable, array $additionalData): array
     {
         return [
             'message' => $throwable->getMessage(),
             'file' => $throwable->getFile(),
             'line' => $throwable->getLine(),
-            'data' => ['backtrace' => $throwable->getTraceAsString()],
+            'data' => ['backtrace' => $throwable->getTraceAsString()] + $additionalData,
         ];
     }
 
